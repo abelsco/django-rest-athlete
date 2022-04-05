@@ -16,10 +16,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from noc.views import NocViewSet
+from games.views import GamesViewSet
+from event.views import EventViewSet
+from athlete.views import AthleteViewSet
+from medal.views import MedalViewSet
 from rest_framework import routers
 
 router = routers.DefaultRouter()
 router.register(r'nations', NocViewSet)
+router.register(r'games', GamesViewSet)
+router.register(r'events', EventViewSet)
+router.register(r'athletes', AthleteViewSet)
+router.register(r'medals', MedalViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
