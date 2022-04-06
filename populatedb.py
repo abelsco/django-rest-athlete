@@ -1,96 +1,120 @@
+import time
 import pandas
 import psycopg2
 
-
-conn_db = 'postgres://postgres:postgres@0.0.0.0/postgres'
+conn_db = 'postgres://postgres:postgres@db/postgres'
 
 db = psycopg2.connect(conn_db)
 
 dfAthlete = pandas.read_csv('dataset/athlete_events.csv')
 
+def normalizeDataFrame():
+    setup_timer = time.time()
+
+    athletes = dfAthlete.loc[:, ['ID', 'Name', 'Sex', 'Age', 'Height', 'Weight', 'Team', 'NOC']].drop_duplicates(subset=['ID'])
+    athletes.to_csv('dataset/athletes.csv', index=False)
+    
+    games = dfAthlete.loc[:, ['Games', 'Year', 'Season', 'City']].drop_duplicates(subset=['Games'])
+    games.to_csv('dataset/games.csv')
+    
+    events = dfAthlete.loc[:, ['Event', 'Sport']].drop_duplicates(subset=['Event'])
+    events.to_csv('dataset/events.csv')
+    
+    medals = dfAthlete.loc[:, ['Medal', 'ID', 'Event', 'Games']]
+    medals.to_csv('dataset/medals.csv', index=False)
+    
+    # print(athletes)
+    # print(games)
+    # print(events)
+    # print(medals)
+
+    return print("Time for Setup: {}".format(time.time() - setup_timer))
+
 def createNoc():
-    nocs = pandas.read_csv('dataset/noc_regions.csv')
-    print(nocs)
+    setup_timer = time.time()
     cursor = db.cursor()
-    cursor.execute('TRUNCATE TABLE noc_noc')
+    cursor.execute('TRUNCATE TABLE noc_noc RESTART IDENTITY CASCADE')
     sql = '''
-    COPY noc_noc
+    COPY noc_noc (name, region, notes)
     FROM '/dataset/noc_regions.csv'
-    DELIMITER ',' CSV;
+    DELIMITER ',' CSV header;
     '''
     cursor.execute(sql)
     db.commit()
     cursor.close()    
 
-    return
+    return print("Time for Copy Nations: {}".format(time.time() - setup_timer))
 
 def createAthlete():
-    athletes = dfAthlete.loc[:, ['ID', 'Name', 'Sex', 'Age', 'Height', 'Weight', 'Team', 'NOC']].drop_duplicates(subset=['ID'])
-    print(athletes)
-    athletes.to_csv('dataset/formated/athletes.csv')
+    setup_timer = time.time()
     cursor = db.cursor()
-    cursor.execute('TRUNCATE TABLE athlete_athlete')
+    cursor.execute('TRUNCATE TABLE athlete_athlete RESTART IDENTITY CASCADE')
     sql = '''
-    COPY athlete_athlete
-    FROM '/dataset/formated/athletes.csv'
-    DELIMITER ',' CSV;
+    COPY athlete_athlete (id, name, sex, age, height, weight, team, noc_id)
+    FROM '/dataset/athletes.csv'
+    DELIMITER ',' CSV header;
     '''
     cursor.execute(sql)
     db.commit()
     cursor.close()
 
-    return
+    return print("Time for Copy Athlete: {}".format(time.time() - setup_timer))
 
 def createGames():
-    games = dfAthlete.loc[:, ['Games', 'Year', 'City']].drop_duplicates(subset=['Games'])
-    games.to_csv('dataset/formated/games.csv')
-    print(games)
+    setup_timer = time.time()
     cursor = db.cursor()
-    cursor.execute('TRUNCATE TABLE games_games')
+    cursor.execute('TRUNCATE TABLE games_games RESTART IDENTITY CASCADE')
     sql = '''
-    COPY games_games
-    FROM '/dataset/formated/games.csv'
-    DELIMITER ',' CSV;
+    COPY games_games (slug_id, name, year, season, city)
+    FROM '/dataset/games.csv'
+    DELIMITER ',' CSV header;
     '''
     cursor.execute(sql)
     db.commit()
     cursor.close()
 
-    return
+    return print("Time for Copy Games: {}".format(time.time() - setup_timer))
 
 def createEvents():
-    events = dfAthlete.loc[:, ['Event', 'Sport', 'Games']].drop_duplicates(subset=['Event'])
-    print(events)
-    events.to_csv('dataset/formated/events.csv')
+    setup_timer = time.time()
     cursor = db.cursor()
-    cursor.execute('TRUNCATE TABLE event_event')
+    cursor.execute('TRUNCATE TABLE event_event RESTART IDENTITY CASCADE')
     sql = '''
-    COPY event_event
-    FROM '/dataset/formated/event.csv'
-    DELIMITER ',' CSV;
+    COPY event_event (slug_id, name, sport)
+    FROM '/dataset/events.csv'
+    DELIMITER ',' CSV header;
     '''
     cursor.execute(sql)
     db.commit()
     cursor.close()
 
-    return
+    return print("Time for Copy Events: {}".format(time.time() - setup_timer))
 
 def createMedals():
-    medals = dfAthlete.loc[:, ['Event', 'ID', 'Medal']]
-    print(medals)
-    medals.to_csv('dataset/formated/medals.csv')
+    setup_timer = time.time()
     cursor = db.cursor()
-    cursor.execute('TRUNCATE TABLE medal_medal')
+    cursor.execute('TRUNCATE TABLE medal_medal RESTART IDENTITY CASCADE')
     sql = '''
-    COPY medal_medal
-    FROM '/dataset/formated/medal.csv'
-    DELIMITER ',' CSV;
+    COPY medal_medal (medal, athlete_id, event_id, games_id)
+    FROM '/dataset/medals.csv'
+    DELIMITER ',' CSV header;
     '''
     cursor.execute(sql)
     db.commit()
     cursor.close()
 
-    return
+    return print("Time for Copy Medals: {}".format(time.time() - setup_timer))
+
+def __main__():
+    print(normalizeDataFrame())
+    print(createNoc())
+    print(createGames())
+    print(createAthlete())
+    print(createEvents())
+    print(createMedals())
+
+__main__()
+    
 
 # for row in games.values:
 #     print(row[0:4])
