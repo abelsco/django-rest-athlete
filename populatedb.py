@@ -1,6 +1,7 @@
 import time
 import pandas
 import psycopg2
+from slugify import slugify
 
 conn_db = 'postgres://postgres:postgres@db/postgres'
 
@@ -14,13 +15,17 @@ def normalizeDataFrame():
     athletes = dfAthlete.loc[:, ['ID', 'Name', 'Sex', 'Age', 'Height', 'Weight', 'Team', 'NOC']].drop_duplicates(subset=['ID'])
     athletes.to_csv('dataset/athletes.csv', index=False)
     
-    games = dfAthlete.loc[:, ['Games', 'Year', 'Season', 'City']].drop_duplicates(subset=['Games'])
-    games.to_csv('dataset/games.csv')
+    games = dfAthlete.loc[:, ['Year', 'Season', 'City', 'Games']].drop_duplicates(subset=['Games'])
+    games['Slug'] = games.Games.apply(slugify)
+    games.to_csv('dataset/games.csv', index=False)
     
     events = dfAthlete.loc[:, ['Event', 'Sport']].drop_duplicates(subset=['Event'])
-    events.to_csv('dataset/events.csv')
+    events['Slug'] = events.Event.apply(slugify)
+    events.to_csv('dataset/events.csv', index=False)
     
     medals = dfAthlete.loc[:, ['Medal', 'ID', 'Event', 'Games']]
+    medals['Event'] = medals.Event.apply(slugify)
+    medals['Games'] = medals.Games.apply(slugify)
     medals.to_csv('dataset/medals.csv', index=False)
     
     # print(athletes)
@@ -65,7 +70,7 @@ def createGames():
     cursor = db.cursor()
     cursor.execute('TRUNCATE TABLE games_games RESTART IDENTITY CASCADE')
     sql = '''
-    COPY games_games (slug_id, name, year, season, city)
+    COPY games_games (year, season, city, name, slug)
     FROM '/dataset/games.csv'
     DELIMITER ',' CSV header;
     '''
@@ -80,7 +85,7 @@ def createEvents():
     cursor = db.cursor()
     cursor.execute('TRUNCATE TABLE event_event RESTART IDENTITY CASCADE')
     sql = '''
-    COPY event_event (slug_id, name, sport)
+    COPY event_event (name, sport, slug)
     FROM '/dataset/events.csv'
     DELIMITER ',' CSV header;
     '''
