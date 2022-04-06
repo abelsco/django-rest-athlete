@@ -1,13 +1,16 @@
 from django.db import models
-from games.models import Games
 
 class Event(models.Model):
-    name = models.CharField(max_length=60)
+    name = models.CharField(max_length=255, primary_key=True)
     sport = models.CharField(max_length=30)
-    games = models.ForeignKey(Games, on_delete=models.CASCADE)
+    slug_id = models.IntegerField(null=True)
+
+    class Meta:
+        ordering = ('-slug_id', )
 
     def __str__(self):
         return self.name
+
 
 
 # Create your models here.
