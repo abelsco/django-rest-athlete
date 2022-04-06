@@ -9,8 +9,12 @@ class Athlete(models.Model):
     weight = models.FloatField(blank=True, null=True)
     team = models.CharField(max_length=60)
     noc = models.ForeignKey(Noc, related_name='noc_name', to_field='name', on_delete=models.CASCADE, default='')
+    created = models.DateTimeField(auto_now_add=True, blank=True)
+    updated = models.DateTimeField(auto_now=True, blank=True)
 
     class Meta:
+        verbose_name = u'Athlete'
+        verbose_name_plural = u'Athletes'
         ordering = ('-id',)
 
     def __str__(self):
