@@ -5,4 +5,4 @@ from .models import Noc
 class NocSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Noc
-        fields = ['id', 'name', 'region', 'notes']
+        fields = ['name', 'region', 'notes']
