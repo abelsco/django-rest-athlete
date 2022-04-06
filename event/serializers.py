@@ -4,4 +4,4 @@ from .models import Event
 class EventSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Event
-        fields = ['name', 'sport']
+        fields = ['slug', 'sport']
