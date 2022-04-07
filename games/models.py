@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.timezone import datetime
 
 class Games(models.Model):
-    slug = models.SlugField(primary_key=True, default='')
+    slug = models.SlugField(max_length=255, primary_key=True)
     name = models.CharField(max_length=13, null=True)
     year = models.IntegerField()
     season = models.CharField(max_length=6)
