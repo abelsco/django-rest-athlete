@@ -25,11 +25,13 @@ Acesse a pasta com `cd django-rest-athlete`
 
 Execute os containers com `docker-compose up -d`
 
-Agora acesse o container web com o comando `docker exec -it django-rest-athlete_web_1 bash`
+Com isso toda a aplicação, a importação inicial do dataset e as dependencias do projeto serão iniciadas e configuradas.
+
+Agora para configurar um usuário acesse o container web com o comando `docker exec -it django-rest-athlete_web_1 bash`
 
 Dentro do container execute:
-* `python manage.py createsuperuser` para criar um superuser
-* `python populatedb.py` para popular o banco com as informações contidas nos datasets
+* `python manage.py createsuperuser` para criar um usuário superuser
+* Caso você queire realizar uma nova importação dos dados do dataset basta executar o script `python populatedb.py` para popular o banco
 
 > Tive que realizar uma alteração no dataset `noc_regions.csv` pois a NOC de Singapura estava incorreta, você pode ver neste [commit](https://github.com/abelsco/django-rest-athlete/commit/f855681c7cc348c2c4d69736dcb4d276d455fe89)
 
@@ -49,6 +51,12 @@ Endereço da API `http://localhost:8000/api/v1`
 Endereço do admin `http://localhost:8000/admin`
 
 No arquivo `API_V1.json` você encontra alguns exemplos de utilização, caso você utilize o [postman](https://www.postman.com/) você poderá importar a coleção.
+
+### Configurando o postman
+
+Para utilizar o postman você precisa ter um usuário cadastrado, alem de autenticar a sessão no postman.
+
+![Autenticando a sessão no postman](./Peek.gif)
 
 
 ### Padrões de URL

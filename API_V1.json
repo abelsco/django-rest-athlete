@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "fe813683-75d5-42fa-815b-fc683b70b86e",
+		"_postman_id": "18b49ec1-4ddf-49f7-87c7-b302785af4d7",
 		"name": "API DRF Athlete V1",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -45,14 +45,24 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Create a Event",
 					"event": [
 						{
 							"listen": "test",
 							"script": {
+								"id": "cd8f4eda-d3de-4cad-b274-0d8a99caf872",
 								"exec": [
-									"var xsrfCookie = postman.getResponseCookie(\"csrftoken\");",
-									"postman.setEnvironmentVariable('csrftoken', xsrfCookie.value);"
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "3f73d9ae-15a9-4a8a-9933-2df7d81d1d72",
+								"exec": [
+									""
 								],
 								"type": "text/javascript"
 							}
@@ -69,7 +79,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Wrestling Men's Super-Heavyweight, Greco-Roman\",\n    \"slug\": \"sample-event-te\",\n    \"sport\": \"Wrestling\",\n    \"created\": \"2022-04-06T15:18:29.610139Z\",\n    \"updated\": \"2022-04-06T15:18:29.610139Z\"\n}",
+							"raw": "{\n    \"name\": \"Wrestling Men's Super-Heavyweight, Greco-Roman\",\n    \"slug\": \"sample-event-te\",\n    \"sport\": \"Wrestling\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -90,7 +100,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Delete a Event",
 					"request": {
 						"method": "DELETE",
 						"header": [
@@ -114,7 +124,8 @@
 					},
 					"response": []
 				}
-			]
+			],
+			"protocolProfileBehavior": {}
 		},
 		{
 			"name": "Medals",
@@ -153,8 +164,79 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Add a Medal",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "{{labelToken}}",
+								"value": "{{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"medal\": \"Gold\",\n    \"athlete\": 2,\n    \"event\": \"judo-men-s-extra-lightweight\",\n    \"games\": \"1998-winter\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/medals/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"medals",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a Medal",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "{{labelToken}}",
+								"value": "{{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/medals/271117/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"medals",
+								"271117",
+								""
+							]
+						}
+					},
+					"response": []
 				}
-			]
+			],
+			"protocolProfileBehavior": {}
 		},
 		{
 			"name": "Games",
@@ -253,7 +335,8 @@
 					},
 					"response": []
 				}
-			]
+			],
+			"protocolProfileBehavior": {}
 		},
 		{
 			"name": "Athlete",
@@ -351,7 +434,8 @@
 					},
 					"response": []
 				}
-			]
+			],
+			"protocolProfileBehavior": {}
 		},
 		{
 			"name": "Nations",
@@ -438,7 +522,7 @@
 					"response": []
 				},
 				{
-					"name": "New Request",
+					"name": "Delete a NOC",
 					"request": {
 						"method": "DELETE",
 						"header": [
@@ -462,13 +546,101 @@
 					},
 					"response": []
 				}
-			]
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c3d64c02-1a03-4fa7-a8a1-0b5f7e67716c",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "{{labelToken}}",
+								"value": "vHS76ZtnMxyyq3BtfMxK7TC65xN9sUrAHUdBVM97135Upe9E4gLT977a4GP9HcaT",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "admin",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "admin",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/admin/login/?next=/admin/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"admin",
+								"login",
+								""
+							],
+							"query": [
+								{
+									"key": "next",
+									"value": "/admin/"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/admin/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"admin",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
 		}
 	],
 	"event": [
 		{
 			"listen": "prerequest",
 			"script": {
+				"id": "fcb82a41-2112-421d-82dd-b3d67349208e",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -478,26 +650,33 @@
 		{
 			"listen": "test",
 			"script": {
+				"id": "f1ade2d6-d59a-4e40-adcf-f4c5db132ff1",
 				"type": "text/javascript",
 				"exec": [
-					"var xsrfCookie = postman.getResponseCookie(\"csrftoken\");",
-					"postman.setEnvironmentVariable('token', xsrfCookie.value);"
+					""
 				]
 			}
 		}
 	],
 	"variable": [
 		{
+			"id": "636da380-0e79-42f7-89d4-932b235a557d",
 			"key": "baseUrl",
-			"value": "http://localhost:8000/api/v1"
+			"value": "http://localhost:8000/api/v1",
+			"type": "string"
 		},
 		{
+			"id": "3c145d1e-0595-4f7e-b830-dff08bf54810",
 			"key": "token",
-			"value": "i16AJ1x3wAxErlW8DYneK6U2KiK8HeqKRBHUC3nO0nlj4oTR5pWRXYhk6YXvwsUf"
+			"value": "i16AJ1x3wAxErlW8DYneK6U2KiK8HeqKRBHUC3nO0nlj4oTR5pWRXYhk6YXvwsUf",
+			"type": "string"
 		},
 		{
+			"id": "82ddf0ce-17a9-4eed-861e-100bfd296073",
 			"key": "labelToken",
-			"value": "X-CSRFToken"
+			"value": "X-CSRFToken",
+			"type": "string"
 		}
-	]
+	],
+	"protocolProfileBehavior": {}
 }
