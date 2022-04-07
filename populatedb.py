@@ -18,6 +18,8 @@ files_formated = {
     'events': 'dataset/formated/events.csv',
     'medals': 'dataset/formated/medals.csv',
 }
+    
+    
 
 def normalizeDataFrame():
     setup_timer = time.time()
@@ -69,7 +71,7 @@ def createNoc():
     '''.format('/'+files_formated['nocs'])
     cursor.execute(sql)
     db.commit()
-    cursor.close()    
+    cursor.close()
 
     return "Time for Copy Nations: {}".format(time.time() - setup_timer)
 
@@ -133,8 +135,19 @@ def createMedals():
 
     return "Time for Copy Medals: {}".format(time.time() - setup_timer)
 
-def __main__():
+def syncAthleteNextValSequence():
+    sql = '''
+    BEGIN;
+    LOCK TABLE athlete_athlete IN EXCLUSIVE MODE;
+    SELECT setval('athlete_athlete_id_seq', COALESCE((SELECT MAX(id)+1 FROM athlete_athlete), 1), false);
+    '''
+    cursor = db.cursor()
+    cursor.execute(sql)
+    db.commit()
+    cursor.close()
 
+def __main__():
+    
     setup_timer = time.time()
     print(normalizeDataFrame())
     print(createNoc())
@@ -142,6 +155,7 @@ def __main__():
     print(createAthlete())
     print(createEvents())
     print(createMedals())
+    syncAthleteNextValSequence()
     print("Total time: {}".format(time.time() - setup_timer))
 
 if __name__ == "__main__":
