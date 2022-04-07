@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-ykpaeq8d6u+px9tg%$%wj5jwnb-$$2wakyaqf^3_je@*n*&3l-
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0','localhost']
+ALLOWED_HOSTS = ['0.0.0.0','localhost','https://apicelero.herokuapp.com/']
 
 
 # Application definition
