@@ -2,7 +2,7 @@ from statistics import mode
 from rest_framework import serializers
 from .models import Noc
 
-class NocSerializer(serializers.HyperlinkedModelSerializer):
+class NocSerializer(serializers.ModelSerializer):
     class Meta:
         model = Noc
-        fields = ['name', 'region', 'notes']
+        fields = '__all__'

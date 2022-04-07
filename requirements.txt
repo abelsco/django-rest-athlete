@@ -4,3 +4,4 @@ djangorestframework>=3.0
 Markdown>=3.0
 django-filter>=1.0
 pandas>=1.4
+python-slugify>=.1

@@ -6,7 +6,22 @@ from .models import Noc
 
 # ViewSets define the view behavior.
 class NocViewSet(viewsets.ModelViewSet):
-    queryset = Noc.objects.all().order_by('-name')[:10]
+    queryset = Noc.objects.all()
     serializer_class = NocSerializer
+
+    def get(self, request, *args, **kwargs):
+        return super().retrieve(self, request, *args, **kwargs)
+
+    def put(self, request, *args, **kwargs):
+        return super().update(self, request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        return super().destroy(self, request, *args, **kwargs)
+
+    def options(self, request, *args, **kwargs):
+        return super().options(request, *args, **kwargs)
+    
+    def get_queryset(self):
+        return super().get_queryset()
 
 # Create your views here.
