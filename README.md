@@ -10,6 +10,13 @@ Django REST Framework comportando os dados do dataset [120 years of Olympic hist
 * [Docker Compose 1.25](https://docs.docker.com/compose/)
 * [PostgreSQL 13](https://www.postgresql.org/)
 
+## Requisitos
+
+Para executar este projeto é necessário ter instalado:
+- Python>=3.0
+- Docker>=20.0
+- docker-compose>=1.25
+
 ## Executando o projeto
 
 Clone este repositório com o comando `git clone https://github.com/abelsco/django-rest-athlete`
