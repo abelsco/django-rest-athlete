@@ -10,3 +10,5 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 COPY . .
+RUN chmod +x wait-for-it.sh
+CMD [ "./wait-for-it.sh", "db:5432", "--strict", "--timeout=300", "--"]
