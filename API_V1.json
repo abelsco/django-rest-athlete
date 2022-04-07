@@ -1,0 +1,503 @@
+{
+	"info": {
+		"_postman_id": "fe813683-75d5-42fa-815b-fc683b70b86e",
+		"name": "API DRF Athlete V1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Events",
+			"item": [
+				{
+					"name": "Get Events",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/events/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"events",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get A Event",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/events/sample-text",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"events",
+								"sample-text"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var xsrfCookie = postman.getResponseCookie(\"csrftoken\");",
+									"postman.setEnvironmentVariable('csrftoken', xsrfCookie.value);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "{{labelToken}}",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Wrestling Men's Super-Heavyweight, Greco-Roman\",\n    \"slug\": \"sample-event-te\",\n    \"sport\": \"Wrestling\",\n    \"created\": \"2022-04-06T15:18:29.610139Z\",\n    \"updated\": \"2022-04-06T15:18:29.610139Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/events/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"events",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "{{labelToken}}",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/events/sample-event-te/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"events",
+								"sample-event-te",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Medals",
+			"item": [
+				{
+					"name": "Get Medals",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/medals",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"medals"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get  a Medal",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/medals/2",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"medals",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Games",
+			"item": [
+				{
+					"name": "Get Games",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/games",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"games"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a Game",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/games/2016-summer/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"games",
+								"2016-summer",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a Games",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "{{labelToken}}",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/games/2022-summer/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"games",
+								"2022-summer",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Games",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "{{labelToken}}",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"slug\": \"2022-summer\",\n    \"name\": \"2022 Summer\",\n    \"year\": 2022,\n    \"season\": \"Summer\",\n    \"city\": \"Rio de Janeiro\",\n    \"created\": \"2022-04-06T15:18:29.484679Z\",\n    \"updated\": \"2022-04-06T15:18:29.484679Z\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/games/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"games",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Athlete",
+			"item": [
+				{
+					"name": "Get Athletes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/athletes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"athletes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a Athlete",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/athletes/1",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"athletes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Athlete",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "{{labelToken}}",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Abel dos Santos Menezes\",\n    \"sex\": \"M\",\n    \"age\": 22.0,\n    \"height\": null,\n    \"weight\": null,\n    \"team\": \"Finland\",\n    \"noc\": \"FIN\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/athletes/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"athletes",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a Athlete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "{{labelToken}}",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/athletes/135572/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"athletes",
+								"135572",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Nations",
+			"item": [
+				{
+					"name": "Get a Nation",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/nations/ZIM/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"nations",
+								"ZIM",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Nations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/nations/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"nations",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post a NOC",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-CSRFToken",
+								"value": "i16AJ1x3wAxErlW8DYneK6U2KiK8HeqKRBHUC3nO0nlj4oTR5pWRXYhk6YXvwsUf",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "ZZZ",
+									"type": "text"
+								},
+								{
+									"key": "region",
+									"value": "Sample",
+									"type": "text"
+								},
+								{
+									"key": "notes",
+									"value": "notes",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/nations/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"nations",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "{{labelToken}}",
+								"value": "{{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/nations/ZZZ/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"nations",
+								"ZZZ",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"var xsrfCookie = postman.getResponseCookie(\"csrftoken\");",
+					"postman.setEnvironmentVariable('token', xsrfCookie.value);"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8000/api/v1"
+		},
+		{
+			"key": "token",
+			"value": "i16AJ1x3wAxErlW8DYneK6U2KiK8HeqKRBHUC3nO0nlj4oTR5pWRXYhk6YXvwsUf"
+		},
+		{
+			"key": "labelToken",
+			"value": "X-CSRFToken"
+		}
+	]
+}
