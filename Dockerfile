@@ -1,4 +1,4 @@
-FROM python:3.9
+FROM python:3.9-slim
 LABEL Name=apicelero Version=0.0.1
 
 ENV PYTHONDONTWRITEBYTECODE 1
